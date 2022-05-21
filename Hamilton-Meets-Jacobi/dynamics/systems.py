@@ -4,7 +4,8 @@ import numpy as np
 def simple2D(x, t, u=[1.0,1.0], mu=1.0, lam=1.0):
     return np.array([mu * x[0] + u[0], lam * (x[1] - x[0] ** 2) + u[1]])
 
-
+def rkhs():
+    print("rkhs")
 
 
 
