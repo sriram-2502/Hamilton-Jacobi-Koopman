@@ -11,6 +11,8 @@ def oscillator2D(x, t, u=1.0):
 def mems3D(x, t, u=1.0):
     return np.array([x[1], -x[0]+x[1]-x[2]-(x[0]**2)*x[1], x[2]-x[2]-x[2]**3])
 
+    
+
 # Runge Kutta first order (Euler) approximation of the ode solution 
 def rk1(f, y0, t, args=()):
     n = len(t)
