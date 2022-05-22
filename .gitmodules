@@ -1,0 +1,3 @@
+[submodule "deeptime"]
+	path = deeptime
+	url = https://github.com/deeptime-ml/deeptime.git
