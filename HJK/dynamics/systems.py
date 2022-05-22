@@ -3,7 +3,30 @@ import numpy as np
 # Simple 2D system
 
 def simple2D(x, t, u=[1.0, 1.0], mu=1.0, lam=1.0):
-    return np.array([mu*x[0] + u[0], lam*(x[1]-x[0]**2) + u[1]])
+    x1 = x[0]
+    x2 = x[1]
+
+    B = [1, 1]
+    u1 = B[0]*u[0]
+    u2 = B[1]*u[1]
+
+    return np.array([mu*x1 + u1, lam*(x2-x1**2) + u2])
+
+def simple2Dsystem(t, x, u, params):
+    x1 = x[0]
+    x2 = x[1]
+
+    B = [1.0, 1.0]
+    u1 = B[0]*u
+    u2 = B[1]*u
+
+    mu = params.get('mu',-1.0)
+    lam = params.get('lam',-2.0)
+
+    dx1 = mu * x1 + u1
+    dx2 = lam * (x2 - x1 ** 2) + u2
+    return np.array([dx1 , dx2])
+
 
 def oscillator2D(x, t, u=1.0):
     return np.array([x[2], -x[0] + 0.105*x[1] + 0.5*x[1]*x[0]**2 + 1.1*x[0]*x[1] + 1.1+x[0]*u])
@@ -11,7 +34,7 @@ def oscillator2D(x, t, u=1.0):
 def mems3D(x, t, u=1.0):
     return np.array([x[1], -x[0]+x[1]-x[2]-(x[0]**2)*x[1], x[2]-x[2]-x[2]**3])
 
-    
+
 
 # Runge Kutta first order (Euler) approximation of the ode solution 
 def rk1(f, y0, t, args=()):
