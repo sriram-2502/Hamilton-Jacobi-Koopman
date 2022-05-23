@@ -12,22 +12,40 @@ def simple2D(x, t, u=[1.0, 1.0], mu=1.0, lam=1.0):
     return np.array([mu*x1 + u1, lam*(x2-x1**2) + u2])
 
 
-def simple2Dsystem(t, x, u, params):
-    x1 = x[0]
-    x2 = x[1]
-
-    B = [1.0, 1.0]
-    u1 = B[0]*u
-    u2 = B[1]*u
+def simple2Dsystem(t, x, u_fun, params):
 
     mu = params.get('mu',-1.0)
     lam = params.get('lam',-2.0)
+    control = params.get('u')
+
+    A = np.array([[mu, 0],[0, lam]])
+    B = np.array([[1],[1]])
+
+    if(u_fun == 0):
+        u = 0.0
+
+    if(control=="LQR"):
+        P,u = u_fun(x,A,B)
+        #print("P:", P)
+
+    if(control=="HJK1"):
+        U = params.get('U')
+        degree = params.get('degree')
+        R = params.get('R')
+        Q = params.get('Q')
+        L,L_verify,u = u_fun(x,A,B,Q,R,U,degree)
+        #print("L:", L)
+        #print("L_verify", L_verify)
+
+    x1 = x[0]
+    x2 = x[1]
+
+    u1 = B[0,0]*u
+    u2 = B[1,0]*u
 
     dx1 = mu * x1 + u1
     dx2 = lam * (x2 - x1 ** 2) + u2
-    return np.array([dx1 , dx2])
-
-
+    return np.array([dx1, dx2])
 
 
 def oscillator2D(x, t, u=1.0):
@@ -35,6 +53,8 @@ def oscillator2D(x, t, u=1.0):
 
 def mems3D(x, t, u=1.0):
     return np.array([x[1], -x[0]+x[1]-x[2]-(x[0]**2)*x[1], x[2]-x[2]-x[2]**3])
+
+
 
 
 

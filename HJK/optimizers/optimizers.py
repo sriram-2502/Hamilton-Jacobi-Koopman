@@ -3,7 +3,10 @@ import cvxpy as cp
 from casadi import *
 
 
-def cvx (dim, Nbs, A, X, sys, params, Psi , DPsi):
+def cvx (sys, params, A, X, Psi , DPsi):
+
+    dim = np.shape(X)[0]
+    Nbs = np.shape(Psi)[0]
 
     # get xdot values
     t = 0
@@ -28,7 +31,7 @@ def cvx (dim, Nbs, A, X, sys, params, Psi , DPsi):
 
 
     U = cp.Variable(shape=(dim, Nbs))
-    objective = cp.Minimize((cp.norm(U @ Df_z + F_z - A @ U @ G_z - Ez, 'fro')))
+    objective = cp.Minimize((cp.norm(U @ Df_z + F_z - E @ U @ G_z - Ez, 'fro')))
     constraints  = []
 
     prob = cp.Problem(objective, constraints)
