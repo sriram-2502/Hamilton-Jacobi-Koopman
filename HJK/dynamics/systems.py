@@ -1,6 +1,5 @@
 import numpy as np
 
-# Simple 2D system
 
 def simple2D(x, t, u=[1.0, 1.0], mu=1.0, lam=1.0):
     x1 = x[0]
@@ -11,6 +10,7 @@ def simple2D(x, t, u=[1.0, 1.0], mu=1.0, lam=1.0):
     u2 = B[1]*u[1]
 
     return np.array([mu*x1 + u1, lam*(x2-x1**2) + u2])
+
 
 def simple2Dsystem(t, x, u, params):
     x1 = x[0]
@@ -26,6 +26,8 @@ def simple2Dsystem(t, x, u, params):
     dx1 = mu * x1 + u1
     dx2 = lam * (x2 - x1 ** 2) + u2
     return np.array([dx1 , dx2])
+
+
 
 
 def oscillator2D(x, t, u=1.0):
