@@ -1,4 +1,4 @@
-import numpy as _np
+import autograd.numpy as _np
 import math
 
 class monomials(object):

@@ -48,6 +48,24 @@ def simple2Dsystem(t, x, u_fun, params):
     return np.array([dx1, dx2])
 
 
+
+def simple2Dsystem_hamiltonian(t, x):
+    x1 = x[0]
+    x2 = x[1]
+    x3 = x[2]
+    x4 = x[3]
+
+    dx1 = -x1 - x3 - x4
+    dx2 = 3*x1**2/5 + 3*x2/5 -x3 - x4
+    dx3 = x3 - x1 +6*x1*x4/5
+    dx4 = -x2 - 3*x4/5
+
+    return np.array([dx1, dx2, dx3, dx4])
+
+
+
+
+
 def oscillator2D(x, t, u=1.0):
     return np.array([x[2], -x[0] + 0.105*x[1] + 0.5*x[1]*x[0]**2 + 1.1*x[0]*x[1] + 1.1+x[0]*u])
 
