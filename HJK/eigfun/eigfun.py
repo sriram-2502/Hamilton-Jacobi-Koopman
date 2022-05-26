@@ -42,6 +42,7 @@ def eval_monomial_eigfun(X, A, U, Psi, DPsi):
 
 def monomial_eigfun_hamiltonain(x, A, U, Psi, DPsi):
     # To evolve eigenfunctions at a domain [X;P] in R^2nxm
+    x = np.array([x]).T # add extra dimension for matmul
     dim = np.shape(x)[1]
 
     W = sp.linalg.eig(A, left=True, right=False)[1]
@@ -51,7 +52,7 @@ def monomial_eigfun_hamiltonain(x, A, U, Psi, DPsi):
     numIC = np.shape(x)[1]
     for i in range(numIC):
         DPhi.append(W.T + W.T @ U @ DPsi[:,:,i])
-    DPhi = np.reshape(DPhi, (np.shape(X)[0],-1))
+    DPhi = np.reshape(DPhi, (np.shape(x)[0],-1))
 
     # nonlinear x 
     PsiX = Psi[dim+1:,:]; nb_PsiX = np.size(PsiX)
@@ -68,9 +69,7 @@ def monomial_eigfun_hamiltonain(x, A, U, Psi, DPsi):
     # build basis
     Psi_Gamma = [[PsiX], [X_o_P], [PsiX_o_P]]
     nb_Psi_Gamma = np.size(Psi_Gamma)
-
-    
-    
-    return [Phi, DPhi]
+   
+    return Psi_Gamma
 
 
